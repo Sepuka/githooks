@@ -5,6 +5,11 @@ BRANCH=$(git symbolic-ref --short HEAD)
 # credentials format USER@HOST:PASSWORD
 CREDENTIALS=$(cat ~/credentials)
 
+if [[ ! $BRANCH =~ ^[[:digit:]]+$ ]];
+then
+  exit 0
+fi
+
 check_jq() {
     type jq $2>1 $1>/dev/null
     if [ $? != 0 ]
