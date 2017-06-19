@@ -2,7 +2,7 @@
 
 ADDR="targetprocess.com"
 BRANCH=$(git symbolic-ref --short HEAD)
-# credentials format USER@HOST:PASSWORD
+# credentials format LOGIN:PASSWORD
 CREDENTIALS=$(cat ~/credentials)
 
 if [ $2 == "message" ] || [[ ! $BRANCH =~ ^[[:digit:]]+$ ]]
@@ -22,7 +22,7 @@ check_jq() {
 check_jq
 
 USER_STORY_ID=$BRANCH;
-ENTITY_PATH="$ADDR/api/v1/UserStories/$USER_STORY_ID?include=\[Name\]";
+ENTITY_PATH="$ADDR/api/v1/Assignables/$USER_STORY_ID?include=\[Name\]";
 TITLE=`curl $ENTITY_PATH -H 'Accept: application/json' --user $CREDENTIALS -s | jq '.Name' --raw-output`;
 TEMPLATE=$(cat $1)
 echo -e "$BRANCH $TITLE\n$TEMPLATE">$1
