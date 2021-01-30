@@ -1,0 +1,14 @@
+#!/bin/sh
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+BRANCH=$(git symbolic-ref --short HEAD)
+MSG_BRANCH=$(echo $BRANCH | awk -F"/" '{print $4" "$3}')
+
+/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+
+
+
+echo "$(echo $MSG_BRANCH | cat - $COMMIT_MSG_FILE)" > $COMMIT_MSG_FILE
